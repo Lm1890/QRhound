@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
 import QRCode from 'qrcode'
-import { nanoid } from 'nanoid'
+import crypto from 'crypto'
+function nanoid(size) { return crypto.randomBytes(size).toString('base64url').slice(0, size) }
 
 export async function POST(request) {
   try {
