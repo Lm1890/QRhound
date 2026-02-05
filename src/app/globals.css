@@ -6,3 +6,68 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* Gradient text utility */
+.text-gradient {
+  background: linear-gradient(135deg, #a855f7, #d946ef, #f97316);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Ambient glow blobs behind hero */
+.hero-glow {
+  position: relative;
+  overflow: hidden;
+}
+.hero-glow::before,
+.hero-glow::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.35;
+  pointer-events: none;
+}
+.hero-glow::before {
+  width: 500px;
+  height: 500px;
+  background: #a855f7;
+  top: -150px;
+  left: -100px;
+}
+.hero-glow::after {
+  width: 400px;
+  height: 400px;
+  background: #d946ef;
+  bottom: -100px;
+  right: -50px;
+}
+
+/* Animated gradient border */
+.gradient-border {
+  position: relative;
+  border-radius: 1rem;
+}
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: linear-gradient(135deg, #a855f7, #d946ef, #f97316);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Hover glow on buttons */
+.btn-glow {
+  position: relative;
+  overflow: hidden;
+  transition: box-shadow 0.3s ease;
+}
+.btn-glow:hover {
+  box-shadow: 0 0 30px rgba(217, 70, 239, 0.4), 0 0 60px rgba(168, 85, 247, 0.2);
+}
