@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { supabase } from '@/lib/supabase'
+import { getSupabase } from '@/lib/supabase'
 import QRCode from 'qrcode'
 import crypto from 'crypto'
 function nanoid(size) { return crypto.randomBytes(size).toString('base64url').slice(0, size) }
@@ -32,7 +32,7 @@ export async function POST(request) {
     })
 
     // Save to database
-    const { data, error } = await supabase
+    const { data, error } = await getSupabase()
       .from('qr_codes')
       .insert({
         short_code: shortCode,

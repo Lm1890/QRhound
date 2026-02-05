@@ -1,12 +1,12 @@
 import { NextResponse } from 'next/server'
-import { supabase } from '@/lib/supabase'
+import { getSupabase } from '@/lib/supabase'
 import { parseDevice } from '@/lib/utils'
 
 export async function GET(request, { params }) {
   const { code } = params
 
   // Look up the QR code
-  const { data: qrCode, error } = await supabase
+  const { data: qrCode, error } = await getSupabase()
     .from('qr_codes')
     .select('id, target_url, scan_count')
     .eq('short_code', code)
@@ -26,7 +26,7 @@ export async function GET(request, { params }) {
   const city = request.headers.get('x-vercel-ip-city') || null
 
   // Log the scan (fire and forget — don't block the redirect)
-  supabase.from('scans').insert({
+  getSupabase().from('scans').insert({
     qr_code_id: qrCode.id,
     ip_address: ip,
     user_agent: userAgent,
@@ -37,7 +37,7 @@ export async function GET(request, { params }) {
   }).then(() => {})
 
   // Increment scan count
-  supabase.from('qr_codes')
+  getSupabase().from('qr_codes')
     .update({ scan_count: (qrCode.scan_count || 0) + 1 })
     .eq('id', qrCode.id)
     .then(() => {})

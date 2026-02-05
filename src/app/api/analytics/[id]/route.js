@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { supabase } from '@/lib/supabase'
+import { getSupabase } from '@/lib/supabase'
 
 export async function GET(request, { params }) {
   const { id } = params
@@ -10,6 +10,8 @@ export async function GET(request, { params }) {
   }
 
   // Verify admin token
+  const supabase = getSupabase()
+
   const { data: qrCode, error: qrError } = await supabase
     .from('qr_codes')
     .select('*')
